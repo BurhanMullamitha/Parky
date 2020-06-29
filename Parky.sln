@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parky", "Parky.csproj", "{94678EC5-538C-4799-99B7-11D9412BE0C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkyAPI", "ParkyAPI\ParkyAPI.csproj", "{5C0CD35B-8F54-40DA-9792-3A152E1FBF1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|anycpu = Debug|anycpu
+		Release|anycpu = Release|anycpu
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94678EC5-538C-4799-99B7-11D9412BE0C0}.Debug|anycpu.ActiveCfg = Debug|anycpu
+		{94678EC5-538C-4799-99B7-11D9412BE0C0}.Debug|anycpu.Build.0 = Debug|anycpu
+		{94678EC5-538C-4799-99B7-11D9412BE0C0}.Release|anycpu.ActiveCfg = Release|anycpu
+		{94678EC5-538C-4799-99B7-11D9412BE0C0}.Release|anycpu.Build.0 = Release|anycpu
+		{5C0CD35B-8F54-40DA-9792-3A152E1FBF1E}.Debug|anycpu.ActiveCfg = Debug|Any CPU
+		{5C0CD35B-8F54-40DA-9792-3A152E1FBF1E}.Debug|anycpu.Build.0 = Debug|Any CPU
+		{5C0CD35B-8F54-40DA-9792-3A152E1FBF1E}.Release|anycpu.ActiveCfg = Release|Any CPU
+		{5C0CD35B-8F54-40DA-9792-3A152E1FBF1E}.Release|anycpu.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
