@@ -14,9 +14,10 @@ namespace ParkyAPI.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
   public class NationalParksController : Controller
   {
-    private INationalParkRepository _npRepo;
+    private readonly INationalParkRepository _npRepo;
     private readonly IMapper _mapper;
 
     public NationalParksController(INationalParkRepository npRepo, IMapper mapper)
@@ -25,7 +26,12 @@ namespace ParkyAPI.Controllers
       _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get list of national parks
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NationalParkDto>))]
     public IActionResult GetNationalParks()
     {
       var objList = _npRepo.GetNationalParks();
@@ -39,7 +45,15 @@ namespace ParkyAPI.Controllers
       return Ok(objList);
     }
 
+    /// <summary>
+    /// Get single national park
+    /// </summary>
+    /// <param name="nationalParkId">The ID of the national park</param>
+    /// <returns></returns>
     [HttpGet("{nationalParkId:int}", Name ="GetNationalPark")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NationalParkDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
     public IActionResult GetNationalPark(int nationalParkId)
     {
       var obj = _npRepo.GetNationalPark(nationalParkId);
@@ -54,6 +68,9 @@ namespace ParkyAPI.Controllers
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(NationalParkDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult CreateNationalPark([FromBody] NationalParkDto nationalParkDto)
     {
       if(nationalParkDto == null)
@@ -78,6 +95,9 @@ namespace ParkyAPI.Controllers
     }
 
     [HttpPatch("{nationalParkId:int}", Name ="UpdateNationalPark")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult UpdateNationalPark(int nationalParkId, [FromBody] NationalParkDto nationalParkDto)
     {
       if(nationalParkDto == null || nationalParkId != nationalParkDto.Id)
@@ -96,6 +116,10 @@ namespace ParkyAPI.Controllers
     }
 
     [HttpDelete("{nationalParkId:int}", Name = "DeleteNationalPark")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult DeleteNationalPark(int nationalParkId)
     {
       if (!_npRepo.NationalParkExists(nationalParkId))
