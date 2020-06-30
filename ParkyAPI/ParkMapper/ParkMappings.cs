@@ -5,11 +5,14 @@ using ParkyAPI.Models.Dtos;
 
 namespace ParkyAPI.ParkMapper
 {
-    public class ParkMappings : Profile
+  public class ParkMappings : Profile
+  {
+    public ParkMappings()
     {
-        public ParkMappings()
-        {
-            CreateMap<NationalPark, NationalParkDto>().ReverseMap();
-        }
+      CreateMap<NationalPark, NationalParkDto>().ReverseMap();
+      CreateMap<Trail, TrailDto>().ReverseMap();
+      CreateMap<Trail, TrailUpdateDto>().ReverseMap();
+      CreateMap<Trail, TrailCreateDto>().ReverseMap();
     }
+  }
 }
