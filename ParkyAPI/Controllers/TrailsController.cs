@@ -66,6 +66,28 @@ namespace ParkyAPI.Controllers
       return Ok(objDto);
     }
 
+    [HttpGet("[action]{nationalPark:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TrailDto))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public IActionResult GetTrailsInNationalPark(int nationalParkId)
+    {
+      var objList = _trailRepo.GetTrailsInNationalPark(nationalParkId);
+
+      if (objList == null)
+      {
+        return NotFound();
+      }
+
+      var objDto = new List<TrailDto>();
+      foreach (var obj in objList)
+      {
+        objDto.Add(_mapper.Map<TrailDto>(obj));
+      }
+
+      return Ok(objDto);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TrailDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

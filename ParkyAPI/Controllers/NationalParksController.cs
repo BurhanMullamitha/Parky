@@ -12,7 +12,7 @@ using ParkyAPI.Repository.IRepository;
 
 namespace ParkyAPI.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("api/v{version:apiVersion}/nationalparks")]
   [ApiController]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   public class NationalParksController : Controller
@@ -36,13 +36,13 @@ namespace ParkyAPI.Controllers
     {
       var objList = _npRepo.GetNationalParks();
       var objDto = new List<NationalParkDto>();
-
+      
       foreach (var obj in objList)
       {
         objDto.Add(_mapper.Map<NationalParkDto>(obj));
       }
 
-      return Ok(objList);
+      return Ok(objDto);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ namespace ParkyAPI.Controllers
         ModelState.AddModelError("", "National Park Exists!");
         return StatusCode(404, ModelState);
       }
-
+      
       var nationalParkObj = _mapper.Map<NationalPark>(nationalParkDto);
       if (!_npRepo.CreateNationalPark(nationalParkObj))
       {
@@ -91,7 +91,7 @@ namespace ParkyAPI.Controllers
         return StatusCode(500, ModelState);
       }
 
-      return CreatedAtRoute("GetNationalPark", new { nationalParkId = nationalParkObj.Id}, nationalParkObj);
+      return CreatedAtRoute("GetNationalPark", new { version=HttpContext.GetRequestedApiVersion().ToString(), nationalParkId = nationalParkObj.Id}, nationalParkObj);
     }
 
     [HttpPatch("{nationalParkId:int}", Name ="UpdateNationalPark")]
