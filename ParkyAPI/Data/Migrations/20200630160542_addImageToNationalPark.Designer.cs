@@ -63,9 +63,8 @@ namespace ParkyAPI.Migrations
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
-                    b.Property<string>("Distance")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("Distance")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()

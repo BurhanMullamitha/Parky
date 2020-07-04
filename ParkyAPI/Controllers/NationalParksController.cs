@@ -15,7 +15,7 @@ namespace ParkyAPI.Controllers
   [Route("api/v{version:apiVersion}/nationalparks")]
   [ApiController]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
-  public class NationalParksController : Controller
+  public class NationalParksController : ControllerBase
   {
     private readonly INationalParkRepository _npRepo;
     private readonly IMapper _mapper;
@@ -31,7 +31,7 @@ namespace ParkyAPI.Controllers
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<NationalParkDto>))]
+    [ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
     public IActionResult GetNationalParks()
     {
       var objList = _npRepo.GetNationalParks();
@@ -51,8 +51,8 @@ namespace ParkyAPI.Controllers
     /// <param name="nationalParkId">The ID of the national park</param>
     /// <returns></returns>
     [HttpGet("{nationalParkId:int}", Name ="GetNationalPark")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NationalParkDto))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(200, Type = typeof(NationalParkDto))]
+    [ProducesResponseType(404)]
     [ProducesDefaultResponseType]
     public IActionResult GetNationalPark(int nationalParkId)
     {
@@ -68,7 +68,8 @@ namespace ParkyAPI.Controllers
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(NationalParkDto))]
+    [ProducesResponseType(201, Type = typeof(NationalParkDto))]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult CreateNationalPark([FromBody] NationalParkDto nationalParkDto)
@@ -91,11 +92,12 @@ namespace ParkyAPI.Controllers
         return StatusCode(500, ModelState);
       }
 
-      return CreatedAtRoute("GetNationalPark", new { version=HttpContext.GetRequestedApiVersion().ToString(), nationalParkId = nationalParkObj.Id}, nationalParkObj);
+      return CreatedAtRoute("GetNationalPark",
+          new { version = HttpContext.GetRequestedApiVersion().ToString(), nationalParkId = nationalParkObj.Id}, nationalParkObj);
     }
 
     [HttpPatch("{nationalParkId:int}", Name ="UpdateNationalPark")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(204)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public IActionResult UpdateNationalPark(int nationalParkId, [FromBody] NationalParkDto nationalParkDto)
