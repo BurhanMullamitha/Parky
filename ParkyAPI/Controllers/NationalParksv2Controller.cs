@@ -14,7 +14,7 @@ namespace ParkyAPI.Controllers
   [ApiVersion("2.0")]
   [ApiController]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
-  public class NationalParksv2Controller : Controller
+  public class NationalParksv2Controller : ControllerBase
   {
     private readonly INationalParkRepository _npRepo;
     private readonly IMapper _mapper;
