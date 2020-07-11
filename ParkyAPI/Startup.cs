@@ -52,6 +52,10 @@ namespace ParkyAPI
       services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
       services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfig>();
       services.AddSwaggerGen();
+
+      var appSettingsSection = Configuration.GetSection("AppSettings");
+      services.Configure<AppSettings>(appSettingsSection);
+
       services.AddControllers();
     }
 
